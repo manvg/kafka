@@ -12,7 +12,7 @@ services:
     volumes:
       - zookeeper-data-1:/var/lib/zookeeper
     networks:
-      - kafka-net
+      - kafka_kafka-net
 
   # Zookeeper 2 (Follower)
   zookeeper-2:
@@ -27,7 +27,7 @@ services:
     volumes:
       - zookeeper-data-2:/var/lib/zookeeper
     networks:
-      - kafka-net
+      - kafka_kafka-net
 
   # Zookeeper 3 (Follower)
   zookeeper-3:
@@ -42,7 +42,7 @@ services:
     volumes:
       - zookeeper-data-3:/var/lib/zookeeper
     networks:
-      - kafka-net
+      - kafka_kafka-net
 
   # Kafka 1
   kafka-1:
@@ -60,7 +60,7 @@ services:
       KAFKA_LISTENER_EXTERNAL: "OUTSIDE"
       KAFKA_INTER_BROKER_LISTENER_NAME: "INSIDE"  # Añadir esta línea para definir el listener inter-broker
     networks:
-      - kafka-net
+      - kafka_kafka-net
 
   # Kafka 2
   kafka-2:
@@ -78,7 +78,7 @@ services:
       KAFKA_LISTENER_EXTERNAL: "OUTSIDE"
       KAFKA_INTER_BROKER_LISTENER_NAME: "INSIDE"  # Añadir esta línea para definir el listener inter-broker
     networks:
-      - kafka-net
+      - kafka_kafka-net
 
   # Kafka 3
   kafka-3:
@@ -96,7 +96,7 @@ services:
       KAFKA_LISTENER_EXTERNAL: "OUTSIDE"
       KAFKA_INTER_BROKER_LISTENER_NAME: "INSIDE"  # Añadir esta línea para definir el listener inter-broker
     networks:
-      - kafka-net
+      - kafka_kafka-net
 
   # Kafka UI
   kafka-ui:
@@ -108,10 +108,10 @@ services:
       KAFKA_CLUSTERS_0_NAME: "docker-cluster"
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka-1:9092,kafka-2:9093,kafka-3:9094"
     networks:
-      - kafka-net
+      - kafka_kafka-net
 
 networks:
-  kafka-net:
+  kafka_kafka-net:
     driver: bridge
 
 volumes:
