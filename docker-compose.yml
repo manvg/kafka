@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   # Zookeeper 1 (Leader)
   zookeeper-1:
