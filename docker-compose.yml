@@ -54,11 +54,8 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper-1:2181,zookeeper-2:2181,zookeeper-3:2181"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT"
       KAFKA_LISTENERS: "INSIDE://0.0.0.0:9092,OUTSIDE://0.0.0.0:9093"
-      KAFKA_LISTENER_SECURITY_PROTOCOL: "PLAINTEXT"
       KAFKA_ADVERTISED_LISTENERS: "INSIDE://kafka-1:9092,OUTSIDE://kafka-1:9093"
-      KAFKA_LISTENER_INTERNAL: "INSIDE"
-      KAFKA_LISTENER_EXTERNAL: "OUTSIDE"
-      KAFKA_INTER_BROKER_LISTENER_NAME: "INSIDE"  # Añadir esta línea para definir el listener inter-broker
+      KAFKA_INTER_BROKER_LISTENER_NAME: "INSIDE"
     networks:
       - kafka_kafka-net
 
@@ -72,11 +69,8 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper-1:2181,zookeeper-2:2181,zookeeper-3:2181"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT"
       KAFKA_LISTENERS: "INSIDE://0.0.0.0:9092,OUTSIDE://0.0.0.0:9093"
-      KAFKA_LISTENER_SECURITY_PROTOCOL: "PLAINTEXT"
       KAFKA_ADVERTISED_LISTENERS: "INSIDE://kafka-2:9092,OUTSIDE://kafka-2:9093"
-      KAFKA_LISTENER_INTERNAL: "INSIDE"
-      KAFKA_LISTENER_EXTERNAL: "OUTSIDE"
-      KAFKA_INTER_BROKER_LISTENER_NAME: "INSIDE"  # Añadir esta línea para definir el listener inter-broker
+      KAFKA_INTER_BROKER_LISTENER_NAME: "INSIDE"
     networks:
       - kafka_kafka-net
 
@@ -90,11 +84,8 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper-1:2181,zookeeper-2:2181,zookeeper-3:2181"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT"
       KAFKA_LISTENERS: "INSIDE://0.0.0.0:9092,OUTSIDE://0.0.0.0:9093"
-      KAFKA_LISTENER_SECURITY_PROTOCOL: "PLAINTEXT"
       KAFKA_ADVERTISED_LISTENERS: "INSIDE://kafka-3:9092,OUTSIDE://kafka-3:9093"
-      KAFKA_LISTENER_INTERNAL: "INSIDE"
-      KAFKA_LISTENER_EXTERNAL: "OUTSIDE"
-      KAFKA_INTER_BROKER_LISTENER_NAME: "INSIDE"  # Añadir esta línea para definir el listener inter-broker
+      KAFKA_INTER_BROKER_LISTENER_NAME: "INSIDE"
     networks:
       - kafka_kafka-net
 
@@ -112,7 +103,7 @@ services:
 
 networks:
   kafka_kafka-net:
-    driver: bridge
+    external: true  # Usar la red existente
 
 volumes:
   zookeeper-data-1:
