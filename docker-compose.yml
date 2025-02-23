@@ -12,7 +12,7 @@ services:
     volumes:
       - zookeeper-data-1:/var/lib/zookeeper
     networks:
-      - kafka_kafka-net
+      - kafka-net
 
   # Zookeeper 2 (Follower)
   zookeeper-2:
@@ -27,7 +27,7 @@ services:
     volumes:
       - zookeeper-data-2:/var/lib/zookeeper
     networks:
-      - kafka_kafka-net
+      - kafka-net
 
   # Zookeeper 3 (Follower)
   zookeeper-3:
@@ -42,52 +42,52 @@ services:
     volumes:
       - zookeeper-data-3:/var/lib/zookeeper
     networks:
-      - kafka_kafka-net
+      - kafka-net
 
   # Kafka 1
   kafka-1:
     image: confluentinc/cp-kafka:latest
     container_name: kafka-1
     ports:
-      - "9092:9092"
+      - "9093:9093"
     environment:
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper-1:2181,zookeeper-2:2181,zookeeper-3:2181"
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT"
-      KAFKA_LISTENERS: "INSIDE://0.0.0.0:9092,OUTSIDE://0.0.0.0:9093"
-      KAFKA_ADVERTISED_LISTENERS: "INSIDE://kafka-1:9092,OUTSIDE://kafka-1:9093"
-      KAFKA_INTER_BROKER_LISTENER_NAME: "INSIDE"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT"
+      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:9093"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://172.31.82.234:9093"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
     networks:
-      - kafka_kafka-net
+      - kafka-net
 
   # Kafka 2
   kafka-2:
     image: confluentinc/cp-kafka:latest
     container_name: kafka-2
     ports:
-      - "9093:9092"
+      - "9095:9095"
     environment:
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper-1:2181,zookeeper-2:2181,zookeeper-3:2181"
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT"
-      KAFKA_LISTENERS: "INSIDE://0.0.0.0:9092,OUTSIDE://0.0.0.0:9093"
-      KAFKA_ADVERTISED_LISTENERS: "INSIDE://kafka-2:9092,OUTSIDE://kafka-2:9093"
-      KAFKA_INTER_BROKER_LISTENER_NAME: "INSIDE"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT"
+      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:9095"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://172.31.82.234:9095"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
     networks:
-      - kafka_kafka-net
+      - kafka-net
 
   # Kafka 3
   kafka-3:
     image: confluentinc/cp-kafka:latest
     container_name: kafka-3
     ports:
-      - "9094:9092"
+      - "9097:9097"
     environment:
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper-1:2181,zookeeper-2:2181,zookeeper-3:2181"
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT"
-      KAFKA_LISTENERS: "INSIDE://0.0.0.0:9092,OUTSIDE://0.0.0.0:9093"
-      KAFKA_ADVERTISED_LISTENERS: "INSIDE://kafka-3:9092,OUTSIDE://kafka-3:9093"
-      KAFKA_INTER_BROKER_LISTENER_NAME: "INSIDE"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT"
+      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:9097"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://172.31.82.234:9097"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
     networks:
-      - kafka_kafka-net
+      - kafka-net
 
   # Kafka UI
   kafka-ui:
@@ -97,13 +97,13 @@ services:
       - "8080:8080"
     environment:
       KAFKA_CLUSTERS_0_NAME: "docker-cluster"
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka-1:9092,kafka-2:9093,kafka-3:9094"
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "172.31.82.234:9093,172.31.82.234:9095,172.31.82.234:9097"
     networks:
-      - kafka_kafka-net
+      - kafka-net
 
 networks:
-  kafka_kafka-net:
-    external: true  # Usar la red existente
+  kafka-net:
+    driver: bridge
 
 volumes:
   zookeeper-data-1:
